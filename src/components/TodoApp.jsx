@@ -4,30 +4,33 @@ import { ColorBar } from "./ColorBar";
 import { TodoList } from "./TodoList";
 import { SearchedList } from "./SearchedList";
 import { TodoSearchInput } from "./TodoSearchInput";
+import TodoProvider from "./TodoProvider";
 
 export default function TodoApp() {
-  const savedTodos = JSON.parse(localStorage.getItem("todos")) || [];
-
   const [color, setColor] = useState("yellow");
-  const [todoList, setTodoList] = useState(savedTodos);
   const [searchText, setSearchText] = useState("");
-
-  const handleAddTodo = (text) => {
-    setTodoList([...todoList, [text, color]]);
-  };
-
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todoList));
-  }, [todoList]);
 
   return (
     <div>
-      <TodoInput color={color} onAdd={handleAddTodo} />
-      <ColorBar setColor={setColor} />
-      <h1>Todo Items</h1>
-      <TodoList todoList={todoList} />
-      <TodoSearchInput searchText={searchText} setSearchText={setSearchText} />
-      <SearchedList todoList={todoList} searchText={searchText} />
+      <TodoProvider>
+        <TodoInput color={color} />
+        <ColorBar setColor={setColor} />
+        <h1>Todo Items</h1>
+        <TodoList
+        // todoList={todoList}
+        // onDelete={deleteTodo}
+        // onModify={modifyTodo}
+        />
+        <TodoSearchInput
+          searchText={searchText}
+          setSearchText={setSearchText}
+        />
+        <SearchedList
+          // todoList={todoList}
+          searchText={searchText}
+          // onDelete={deleteTodo}
+        />
+      </TodoProvider>
     </div>
   );
 }

@@ -1,7 +1,9 @@
 import { TodoItem } from "./TodoItem";
+import { useTodo } from "./TodoProvider";
+export function SearchedList({ searchText }) {
+  const { todoList } = useTodo();
 
-export function SearchedList({ todoList, searchText }) {
-  const filtered = todoList.filter(([text]) =>
+  const filtered = todoList.filter(({ text }) =>
     text.toLowerCase().includes(searchText.toLowerCase())
   );
 
@@ -14,8 +16,8 @@ export function SearchedList({ todoList, searchText }) {
         <p>일치하는 항목이 없습니다.</p>
       ) : (
         <ul style={{ padding: 0 }}>
-          {filtered.map(([text, color], idx) => (
-            <TodoItem key={idx} text={text} color={color} />
+          {filtered.map(({ key, text, color }, idx) => (
+            <TodoItem id={key} text={text} color={color} />
           ))}
         </ul>
       )}

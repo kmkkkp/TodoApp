@@ -1,12 +1,12 @@
-import { useRef } from "react";
-
-export function TodoInput({ color, onAdd }) {
+import { useRef, useContext } from "react";
+import { useTodo } from "./TodoProvider";
+export function TodoInput({ color }) {
   const inputRef = useRef(); //input use ref 쓰면되지않나?
-
+  const context = useTodo();
   const handleAdd = () => {
     const value = inputRef.current.value;
     if (value) {
-      onAdd(value);
+      context.addTodo({ text: value, color });
       inputRef.current.value = "";
     }
   };

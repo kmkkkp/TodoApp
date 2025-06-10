@@ -1,12 +1,20 @@
-// TodoList.js
 import { TodoItem } from "./TodoItem";
+import { useTodo } from "./TodoProvider";
+// 여기다가 useState 주고, modifyTodo
+export function TodoList() {
+  const { todoList } = useTodo();
 
-export function TodoList({ todoList }) {
   return (
     <ul style={{ textAlign: "center", padding: 0 }}>
       {todoList.map((todo, index) => (
-        <TodoItem key={index} text={todo[0]} color={todo[1]} />
+        <TodoItem
+          key={todo.key}
+          id={todo.key}
+          text={todo.text}
+          color={todo.color}
+        />
       ))}
     </ul>
   );
 }
+// 삭제 버튼이라, todoList를 건드려야함,
